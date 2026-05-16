@@ -29,6 +29,7 @@ type (
 		Database string `env:"PG_DATABASE,required"`
 		User     string `env:"PG_USER,required"`
 		Pass     string `env:"PG_PASSWORD,required"`
+		URL      string `env:"PG_URL,required"`
 	}
 )
 

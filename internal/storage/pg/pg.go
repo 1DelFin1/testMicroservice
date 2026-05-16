@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/1DelFin1/testMicroservice/config"
+	"github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -17,7 +18,8 @@ const (
 )
 
 type Postgres struct {
-	Pool *pgxpool.Pool
+	Builder squirrel.StatementBuilderType
+	Pool    *pgxpool.Pool
 }
 
 func New(cfg *config.Config) (*Postgres, error) {
@@ -41,7 +43,10 @@ func New(cfg *config.Config) (*Postgres, error) {
 		return nil, fmt.Errorf("pg - New - connAttempts == 0: %w", err)
 	}
 
-	return &Postgres{Pool: pool}, nil
+	return &Postgres{
+		Pool:    pool,
+		Builder: squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar),
+	}, nil
 }
 
 func (p *Postgres) Close(log *slog.Logger) {

@@ -1,7 +1,7 @@
 package config
 
 import (
-	logger "log"
+	"fmt"
 
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/joho/godotenv"
@@ -33,13 +33,13 @@ type (
 	}
 )
 
-func MustLoad() *Config {
+func NewConfig() (*Config, error) {
 	_ = godotenv.Load()
 
 	var cfg Config
 	if err := cleanenv.ReadEnv(&cfg); err != nil {
-		logger.Fatalf("failed to read config: %s", err)
+		return nil, fmt.Errorf("can`t create config: %w", err)
 	}
 
-	return &cfg
+	return &cfg, nil
 }

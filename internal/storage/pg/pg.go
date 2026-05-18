@@ -34,9 +34,14 @@ func New(cfg *config.Config) (*Postgres, error) {
 	var pool *pgxpool.Pool
 	for attempts := _defaultConnAttempts; attempts > 0; attempts-- {
 		pool, err = pgxpool.NewWithConfig(context.Background(), poolConfig)
-		if err == nil {
+		if err != nil {
+			time.Sleep(_defaultConnTimeout)
+			continue
+		}
+		if err = pool.Ping(context.Background()); err == nil {
 			break
 		}
+		pool.Close()
 		time.Sleep(_defaultConnTimeout)
 	}
 

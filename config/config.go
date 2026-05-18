@@ -15,8 +15,9 @@ type (
 	}
 
 	app struct {
-		Env  string `env:"APP_ENV,required"`
-		Name string `env:"APP_NAME"`
+		Env     string `env:"APP_ENV,required"`
+		Name    string `env:"APP_NAME"`
+		Address string `env:"APP_ADDRESS,required"`
 	}
 
 	log struct {

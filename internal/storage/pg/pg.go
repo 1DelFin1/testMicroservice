@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/1DelFin1/testMicroservice/config"
+	"github.com/1DelFin1/testMicroservice/internal/http-server/handlers/user"
 	"github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -55,4 +56,18 @@ func (p *Postgres) Close(log *slog.Logger) {
 	}
 	p.Pool.Close()
 	log.Info("pg pool closed")
+}
+
+func (p *Postgres) CreateUser(*user.Data) (int64, error) {
+	// TODO: implement
+	return 1, nil
+}
+
+func (p *Postgres) DeleteUser(userID int64) error {
+	// TODO: implement
+	return nil
+}
+
+func (p *Postgres) GetUser(userID int64) (*user.Data, error) {
+	return &user.Data{}, nil
 }
